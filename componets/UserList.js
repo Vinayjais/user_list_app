@@ -1,30 +1,32 @@
 
 import React, {useState, useEffect} from 'react';
 
-import { FlatList, StatusBar, StyleSheet,
+import { ActivityIndicator, FlatList, StatusBar, StyleSheet,
      Text, TouchableOpacity, useColorScheme, View} from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSelector, useDispatch  } from 'react-redux';
+import { fetchData } from '../store/slices/list';
 
-const USERS = [
-  { id: '1', name: 'John Doe' },
-  { id: '2', name: 'Jane Smith' },
-  { id: '3', name: 'Bob Johnson' },
-  { id: '4', name: 'Alice Williams' },
-  { id: '5', name: 'Charlie Brown' },
-];
 export default function UserList({ navigation }) {
   const insets = useSafeAreaInsets();
+  const dispatch = useDispatch();
+  const {data,laoding} = useSelector((state)=> state.list)
+
+  useEffect(() => {
+    dispatch(fetchData());
+  }, []);
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <FlatList
-        data={USERS}
+        data={data}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('ViewDetails', item)}>
             <Text style={styles.name}>{item.name}</Text>
           </TouchableOpacity>
         )}
+        ListEmptyComponent={laoding ? <ActivityIndicator color="blue" size="large" /> : null}
       />
     </View>
   );
