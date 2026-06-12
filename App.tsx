@@ -11,12 +11,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ViewDetails from './componets/ViewDetails';
 import UserList from'./componets/UserList';
+import { Provider } from 'react-redux';
+import {store} from './store/store';
 const Stack = createNativeStackNavigator();
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
+    <Provider store={store}>
     <SafeAreaProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <NavigationContainer>
@@ -26,10 +29,8 @@ function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
+    </Provider>
   );
 }
-
-
-
 
 export default App;

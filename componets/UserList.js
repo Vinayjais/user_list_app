@@ -1,5 +1,8 @@
 
-import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
+import React, {useState, useEffect} from 'react';
+
+import { FlatList, StatusBar, StyleSheet,
+     Text, TouchableOpacity, useColorScheme, View} from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const USERS = [
