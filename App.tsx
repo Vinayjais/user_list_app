@@ -5,7 +5,7 @@
  * @format
  */
 
-import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
+import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, useColorScheme, View ,LogBox} from 'react-native';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -14,10 +14,10 @@ import UserList from'./componets/UserList';
 import { Provider } from 'react-redux';
 import {store} from './store/store';
 const Stack = createNativeStackNavigator();
-
+LogBox.ignoreAllLogs()
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
-
+   
   return (
     <Provider store={store}>
     <SafeAreaProvider>
