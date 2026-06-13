@@ -80,6 +80,7 @@ export default function DynamicTodo() {
                     onChangeText={setInput}
                     onSubmitEditing={handleSubmit}
                     returnKeyType="done"
+                    placeholderTextColor={"#ccc"}
                 />
                 <TouchableOpacity style={styles.addBtn} onPress={handleSubmit}>
                     <Text style={styles.addBtnText}>{editId ? 'Save' : 'Add'}</Text>

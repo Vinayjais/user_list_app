@@ -28,7 +28,7 @@ export default function UserList() {
     }, [laoding, haseMoreLoading, isRefreshing]);
 
     const loadMoreData = useCallback(() => {
-        if (isFetching.current || !hasMore ) {
+        if ((isFetching.current || !hasMore ) && !laoding) {
             return;
         }
         console.log('loadMoreData called');
@@ -49,6 +49,7 @@ export default function UserList() {
                 style={styles.searchInput}
                 value={search}
                 onChangeText={setSearch}
+                placeholderTextColor={"#ccc"}
             />
             <Text style={styles.count}>{`Users (${filteredData.length})`}</Text>
             <FlatList
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#fff' },
     searchInput: { margin: 10, padding: 10, borderWidth: 1, borderColor: '#ccc', borderRadius: 8, fontSize: 15 },
     count: { paddingHorizontal: 10, paddingBottom: 4, fontWeight: 'bold' },
-    item: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#eee' },
+    item: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#eee',height:150 },
     name: { fontSize: 16 },
     empty: { textAlign: 'center', marginTop: 40, color: '#888' },
 });
