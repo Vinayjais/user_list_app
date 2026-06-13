@@ -100,6 +100,7 @@ export default function DynamicTodo() {
             </View>
             <FlatList
                 data={todos}
+                showsVerticalScrollIndicator={false}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
                     <Animated.View

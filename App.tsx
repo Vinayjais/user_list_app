@@ -12,7 +12,7 @@ import { navigationRef } from './utils/NavigationService';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import UserDetails from './app/screens/userList/UserDetails';
 import UserList from './app/screens/userList/UserList';
-import Home from './app/Home';
+import Home from './app/screens/Home';
 import DynamicTodo from './app/screens/todo/DynamicTodo';
 import { Provider } from 'react-redux';
 import { store, persistor } from './store/store';

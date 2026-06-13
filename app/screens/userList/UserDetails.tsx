@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Row from '../../../comonents/Row';
+import Row from '../../../components/Row';
 export default function UserDetails({ route } : any) {
   const { id, name, username, email, phone, website, address, company } = route.params;
 

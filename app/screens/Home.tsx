@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { navigate } from '../utils/NavigationService';
+import { navigate } from '../../utils/NavigationService';
 
 const CARDS = [
     { title: 'User List', subtitle: 'Browse and search users', screen: 'UserList' },
