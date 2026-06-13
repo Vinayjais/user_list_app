@@ -6,14 +6,20 @@ interface Item {
   done: boolean;
 }
 
+interface DeletedItem {
+    item: Item;
+    index: number;
+}
+
 interface State {
     data: Item[];
+    deleted: DeletedItem[];
 }
 
 const initialState: State = {
   data: [],
+  deleted: []
 };
-
 
 const todo = createSlice({
     name: "todo",
@@ -31,10 +37,18 @@ const todo = createSlice({
             if (item) item.done = !item.done;
         },
         deleteTodo: (state, action) => {
-            state.data = state.data.filter(t => t.id !== action.payload);
+            const index = state.data.findIndex(t => t.id === action.payload);
+            if (index !== -1) {
+                state.deleted.unshift({ item: state.data[index], index });
+                state.data.splice(index, 1);
+            }
+        },
+        undoDelete: (state) => {
+            const deleted = state.deleted.shift();
+            if (deleted) state.data.splice(deleted.index, 0, deleted.item);
         },
     }
 });
 
-export const { addTodo, editTodo, toggleTodo, deleteTodo } = todo.actions;
+export const { addTodo, editTodo, toggleTodo, deleteTodo, undoDelete } = todo.actions;
 export default todo.reducer;

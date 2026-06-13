@@ -3,17 +3,19 @@ import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'r
 import Feather from 'react-native-vector-icons/Feather';
 import * as Progress from 'react-native-progress';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTodo, editTodo, toggleTodo, deleteTodo } from '../../../store/slices/todo';
+import { addTodo, editTodo, toggleTodo, deleteTodo, undoDelete } from '../../../store/slices/todo';
 
 export default function DynamicTodo() {
     const dispatch = useDispatch();
     const todos = useSelector(state => state.todo.data);
+    const deleted = useSelector(state => state.todo.deleted);
     const [input, setInput] = useState('');
     const [editId, setEditId] = useState(null);
 
     const done = useMemo(() => todos.filter(t => t.done).length, [todos]);
     const total = todos.length;
     const progress = total === 0 ? 0 : done / total;
+
     const handleSubmit = () => {
         if (!input.trim()) return;
         if (editId) {
@@ -54,6 +56,12 @@ export default function DynamicTodo() {
                         animated
                     />
                 </View>
+            )}
+            {deleted.length > 0 && (
+                <TouchableOpacity style={styles.undoBtn} onPress={() => dispatch(undoDelete())}>
+                    <Feather name="rotate-ccw" size={14} color="#fff" />
+                    <Text style={styles.undoBtnText}>{`Undo delete "${deleted[0].item.text}"`}</Text>
+                </TouchableOpacity>
             )}
             <View style={styles.inputRow}>
                 <TextInput
@@ -99,59 +107,19 @@ export default function DynamicTodo() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f5f5f5',
-        padding: 16
-    },
+    container: { flex: 1, backgroundColor: '#f5f5f5', padding: 16 },
     progressContainer: { marginBottom: 16 },
     progressRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 },
     progressText: { fontSize: 13, color: '#555' },
     progressPercent: { fontSize: 13, fontWeight: '700', color: '#007AFF' },
-    inputRow: {
-        flexDirection: 'row',
-        marginBottom: 16
-    },
-    input: {
-        flex: 1,
-        backgroundColor: '#fff',
-        borderRadius: 8,
-        padding: 10,
-        fontSize: 15,
-        borderWidth: 1,
-        borderColor: '#ddd'
-    },
-    addBtn: {
-        marginLeft: 8,
-        backgroundColor: '#007AFF',
-        borderRadius: 8,
-        paddingHorizontal: 16,
-        justifyContent: 'center'
-    },
-    addBtnText: {
-        color: '#fff',
-        fontWeight: '600'
-    },
-    cancelBtn: {
-        marginLeft: 6,
-        backgroundColor: '#FF3B30',
-        borderRadius: 8,
-        paddingHorizontal: 12,
-        justifyContent: 'center'
-    },
-    cancelBtnText: {
-        color: '#fff',
-        fontWeight: '600'
-    },
-    item: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        backgroundColor: '#fff',
-        padding: 14,
-        borderRadius: 8,
-        marginBottom: 10
-    },
+    undoBtn: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#333', borderRadius: 8, padding: 10, marginBottom: 10, gap: 6 },
+    undoBtnText: { color: '#fff', fontSize: 13, flex: 1 },
+    inputRow: { flexDirection: 'row', marginBottom: 16 },
+    input: { flex: 1, backgroundColor: '#fff', borderRadius: 8, padding: 10, fontSize: 15, borderWidth: 1, borderColor: '#ddd' },
+    addBtn: { marginLeft: 8, backgroundColor: '#007AFF', borderRadius: 8, paddingHorizontal: 16, justifyContent: 'center' },
+    addBtnText: { color: '#fff', fontWeight: '600' },
+    cancelBtn: { marginLeft: 6, backgroundColor: '#FF3B30', borderRadius: 8, paddingHorizontal: 12, justifyContent: 'center' },
+    item: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#fff', padding: 14, borderRadius: 8, marginBottom: 10 },
     itemEditing: { borderWidth: 1.5, borderColor: '#007AFF' },
     itemLeft: { flexDirection: 'row', alignItems: 'center', flex: 1 },
     checkbox: { width: 20, height: 20, borderRadius: 4, borderWidth: 2, borderColor: '#007AFF', marginRight: 12 },
