@@ -8,7 +8,7 @@ import { AppDispatch, RootState } from '../../../store/store';
 
 export default function UserList() {
     const dispatch = useDispatch<AppDispatch>();
-    const { data, laoding = false, page, limit, hasMore, haseMoreLoading } = useSelector((state: RootState) => state.list);
+    const { data, laoding = false, isRefreshing = false, page, limit, hasMore, haseMoreLoading } = useSelector((state: RootState) => state.list);
     const [search, setSearch] = useState('');
     const isFetching = useRef(false);
 
@@ -23,7 +23,7 @@ export default function UserList() {
 
     useEffect(() => {
         isFetching.current = laoding || haseMoreLoading;
-    }, [laoding, haseMoreLoading]);
+    }, [laoding, haseMoreLoading, isRefreshing]);
 
     const loadMoreData = useCallback(() => {
         if (!isFetching.current && hasMore && !search) {
@@ -46,12 +46,12 @@ export default function UserList() {
                 keyExtractor={item => String(item.id)}
                 onEndReachedThreshold={0.5}
                 onEndReached={loadMoreData}
-                refreshControl={ 
-               <RefreshControl
-                        refreshing={Boolean(laoding)}
-                onRefresh={() => dispatch(fetchData({ page: 1, limit }))}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isRefreshing}
+                        onRefresh={() => dispatch(fetchData({ page: 1, limit }))}
                     />
-                                    }
+                }
                 initialNumToRender={5}
                 renderItem={({ item }) => (
                     <TouchableOpacity style={styles.item} onPress={() => navigate('ViewDetails', item)}>

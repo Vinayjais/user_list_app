@@ -20,8 +20,9 @@ const list = createSlice({
     initialState: {
         data: [],
         laoding: false,
+        isRefreshing: false,
         page: 1,
-        limit: 5,
+        limit: 10,
         hasMore: true,
         haseMoreLoading: false,
     },
@@ -34,10 +35,12 @@ const list = createSlice({
             state.hasMore = newData.length >= state.limit;
             state.page = action.meta.arg.page + 1;
             state.laoding = false;
+            state.isRefreshing = false;
             state.haseMoreLoading = false;
         })
         builder.addCase(fetchData.pending, (state, action) => {
             if (action.meta.arg.page === 1) {
+                state.isRefreshing = true;
                 state.laoding = true;
                 state.data = [];
                 state.page = 1;
@@ -47,6 +50,7 @@ const list = createSlice({
         })
         builder.addCase(fetchData.rejected, (state) => {
             state.laoding = false;
+            state.isRefreshing = false;
             state.haseMoreLoading = false;
         })
     }

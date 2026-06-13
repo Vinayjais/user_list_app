@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import { useSelector, useDispatch } from 'react-redux';
+import { addTodo, editTodo, toggleTodo, deleteTodo } from '../../../store/slices/todo';
 
 export default function DynamicTodo() {
-    const [todos, setTodos] = useState([]);
+    const dispatch = useDispatch();
+    const todos = useSelector(state => state.todo.data);
     const [input, setInput] = useState('');
     const [editId, setEditId] = useState(null);
 
-    const addTodo = () => {
+    const handleSubmit = () => {
         if (!input.trim()) return;
         if (editId) {
-            setTodos(prev => prev.map(t => t.id === editId ? { ...t, text: input.trim() } : t));
+            dispatch(editTodo({ id: editId, text: input.trim() }));
             setEditId(null);
         } else {
-            setTodos(prev => [...prev, { id: Date.now().toString(), text: input.trim(), done: false }]);
+            dispatch(addTodo(input.trim()));
         }
         setInput('');
     };
@@ -28,12 +31,6 @@ export default function DynamicTodo() {
         setInput('');
     };
 
-    const toggleTodo = id =>
-        setTodos(prev => prev.map(t => t.id === id ? { ...t, done: !t.done } : t));
-
-    const deleteTodo = id =>
-        setTodos(prev => prev.filter(t => t.id !== id));
-
     return (
         <View style={styles.container}>
             <View style={styles.inputRow}>
@@ -42,10 +39,10 @@ export default function DynamicTodo() {
                     placeholder={editId ? 'Edit task...' : 'Add a task...'}
                     value={input}
                     onChangeText={setInput}
-                    onSubmitEditing={addTodo}
+                    onSubmitEditing={handleSubmit}
                     returnKeyType="done"
                 />
-                <TouchableOpacity style={styles.addBtn} onPress={addTodo}>
+                <TouchableOpacity style={styles.addBtn} onPress={handleSubmit}>
                     <Text style={styles.addBtnText}>{editId ? 'Save' : 'Add'}</Text>
                 </TouchableOpacity>
                 {editId && (
@@ -59,7 +56,7 @@ export default function DynamicTodo() {
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
                     <View style={[styles.item, editId === item.id && styles.itemEditing]}>
-                        <TouchableOpacity style={styles.itemLeft} onPress={() => toggleTodo(item.id)}>
+                        <TouchableOpacity style={styles.itemLeft} onPress={() => dispatch(toggleTodo(item.id))}>
                             <View style={[styles.checkbox, item.done && styles.checkboxDone]} />
                             <Text style={[styles.itemText, item.done && styles.itemTextDone]}>{item.text}</Text>
                         </TouchableOpacity>
@@ -67,7 +64,7 @@ export default function DynamicTodo() {
                             <TouchableOpacity onPress={() => startEdit(item)}>
                                 <Feather name="edit-2" size={18} color="#007AFF" style={styles.actionIcon} />
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => deleteTodo(item.id)}>
+                            <TouchableOpacity onPress={() => dispatch(deleteTodo(item.id))}>
                                 <Feather name="trash-2" size={18} color="#FF3B30" style={styles.actionIcon} />
                             </TouchableOpacity>
                         </View>
