@@ -2,6 +2,32 @@
 
 A React Native application for managing and displaying a list of users. Built with React Native, Redux Toolkit, and React Navigation.
 
+## Features
+
+- **User Management**: View and navigate through a structured list of users.
+- **Dynamic Todo List**: Create, edit, and toggle completion of tasks.
+- **Smart Undo System**: Includes a 10-second time-limited undo window for any deleted tasks.
+- **State Persistence**: Global state is managed using Redux Toolkit and persisted locally across app reboots using `AsyncStorage`.
+- **Modern Navigation**: Seamless screen transitions handled by `@react-navigation/native-stack`.
+
+## Project Structure
+
+The codebase is organized in a feature-driven architecture for scalability:
+
+```text
+user_list_app/
+├── app/
+│   ├── Home.tsx                 # Main application entry/home screen
+│   └── screens/                 # Organized by feature domains
+│       ├── todo/                # Todo list feature (DynamicTodo, Item)
+│       └── userList/            # User list feature (UserList, UserDetails)
+├── components/                  # Reusable, stateless UI components (e.g., Row.tsx)
+├── store/                       # Redux Toolkit setup and global state
+│   ├── store.js                 # Redux store configuration
+│   └── slices/                  # State slices (todo.tsx, list.tsx)
+└── utils/                       # Helper functions and services (NavigationService.js)
+```
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
