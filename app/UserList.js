@@ -1,16 +1,14 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { ActivityIndicator, FlatList, TextInput, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, TextInput, StyleSheet, Text, TouchableOpacity, View, RefreshControl } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchData } from '../store/slices/list';
 
 export default function UserList({ navigation }) {
-    const insets = useSafeAreaInsets();
     const dispatch = useDispatch();
-    const { data, laoding, page, limit, hasMore, haseMoreLoading } = useSelector((state) => state.list);
+    const { data, laoding = false, page, limit, hasMore, haseMoreLoading } = useSelector((state) => state.list);
     const [search, setSearch] = useState('');
-
     const filteredData = useMemo(() =>
         data.filter(item => item.name.toLowerCase().includes(search.toLowerCase())),
         [data, search]
@@ -40,6 +38,12 @@ export default function UserList({ navigation }) {
                 keyExtractor={item => String(item.id)}
                 onEndReachedThreshold={0.5}
                 onEndReached={loadMoreData}
+                refreshControl={ 
+               <RefreshControl
+                        refreshing={Boolean(laoding)}
+                        onRefresh={() => dispatch(fetchData({ page: 1, limit, refreshing:true }))}
+                    />
+                                    }
                 initialNumToRender={5}
                 renderItem={({ item }) => (
                     <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('ViewDetails', item)}>

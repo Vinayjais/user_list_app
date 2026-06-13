@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import Row from '../comonents/Row';
 export default function ViewDetails({ route }) {
   const { id, name, username, email, phone, website, address, company } = route.params;
 
@@ -29,19 +29,7 @@ export default function ViewDetails({ route }) {
   );
 }
 
-function Row({ label, value }) {
-  return (
-    <View style={styles.row}>
-      <Text style={styles.label}>{label}</Text>
-      <Text style={styles.value}>{value}</Text>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff', padding: 16, marginBottom:10 },
-  row: { paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#eee' },
-  label: { fontSize: 12, color: '#888' },
-  value: { fontSize: 15, fontWeight: '500', marginTop: 2 },
   section: { fontSize: 14, fontWeight: '700', color: '#333', marginTop: 20, marginBottom: 4 },
 });

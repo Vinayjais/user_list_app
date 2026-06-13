@@ -9,8 +9,8 @@ import { FlatList, StatusBar, StyleSheet, Text, TouchableOpacity, useColorScheme
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ViewDetails from './componets/ViewDetails';
-import UserList from'./componets/UserList';
+import ViewDetails from './app/ViewDetails';
+import UserList from'./app/UserList';
 import { Provider } from 'react-redux';
 import {store} from './store/store';
 const Stack = createNativeStackNavigator();
