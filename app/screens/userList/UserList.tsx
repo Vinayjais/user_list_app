@@ -8,7 +8,7 @@ import { AppDispatch, RootState } from '../../../store/store';
 
 export default function UserList() {
     const dispatch = useDispatch<AppDispatch>();
-    const { data, laoding = false, isRefreshing = false, page, limit, hasMore, haseMoreLoading } = useSelector((state: RootState) => state.list);
+    const { data, loading = false, isRefreshing = false, page, limit, hasMore, haseMoreLoading } = useSelector((state: RootState) => state.list);
     const [search, setSearch] = useState('');
     const isFetching = useRef(false);
 
@@ -24,11 +24,11 @@ export default function UserList() {
     }, []);
 
     useEffect(() => {
-        isFetching.current = laoding || haseMoreLoading;
-    }, [laoding, haseMoreLoading, isRefreshing]);
+        isFetching.current = loading || haseMoreLoading;
+    }, [loading, haseMoreLoading, isRefreshing]);
 
     const loadMoreData = useCallback(() => {
-        if ((isFetching.current || !hasMore ) && !laoding) {
+        if ((isFetching.current || !hasMore ) && !loading) {
             return;
         }
         console.log('loadMoreData called');
@@ -69,7 +69,7 @@ export default function UserList() {
                         <Text style={styles.name}>{item.name}</Text>
                     </TouchableOpacity>
                 )}
-                ListEmptyComponent={laoding ? <ActivityIndicator color="blue" size="large" /> : <Text style={styles.empty}>No users found</Text>}
+                ListEmptyComponent={loading ? <ActivityIndicator color="blue" size="large" /> : <Text style={styles.empty}>No users found</Text>}
                 ListFooterComponent={haseMoreLoading ? <ActivityIndicator color="blue" size="large" /> : null}
             />
         </View>

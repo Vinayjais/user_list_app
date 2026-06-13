@@ -19,7 +19,7 @@ const list = createSlice({
     name: "list",
     initialState: {
         data: [],
-        laoding: false,
+        loading: false,
         isRefreshing: false,
         page: 1,
         limit: 5,
