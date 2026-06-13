@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     undoBtn: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#333', borderRadius: 8, padding: 10, marginBottom: 10, gap: 6 },
     undoBtnText: { color: '#fff', fontSize: 13, flex: 1 },
     inputRow: { flexDirection: 'row', marginBottom: 16 },
-    input: { flex: 1, backgroundColor: '#fff', borderRadius: 8, padding: 10, fontSize: 15, borderWidth: 1, borderColor: '#ddd' },
+    input: { flex: 1, backgroundColor: '#fff', borderRadius: 8, padding: 10, fontSize: 15, borderWidth: 1, borderColor: '#ddd',color:"#000" },
     addBtn: { marginLeft: 8, backgroundColor: '#007AFF', borderRadius: 8, paddingHorizontal: 16, justifyContent: 'center' },
     addBtnText: { color: '#fff', fontWeight: '600' },
     cancelBtn: { marginLeft: 6, backgroundColor: '#FF3B30', borderRadius: 8, paddingHorizontal: 12, justifyContent: 'center' },

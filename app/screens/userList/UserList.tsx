@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { ActivityIndicator, FlatList, TextInput, StyleSheet, Text, TouchableOpacity, View, RefreshControl } from 'react-native';
+import { ActivityIndicator, FlatList, TextInput, StyleSheet, Text, TouchableOpacity, View, RefreshControl, Platform } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchData } from '../../../store/slices/list';
 import { navigate } from '../../../utils/NavigationService';
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#fff' },
     searchInput: { margin: 10, padding: 10, borderWidth: 1, borderColor: '#ccc', borderRadius: 8, fontSize: 15 },
     count: { paddingHorizontal: 10, paddingBottom: 4, fontWeight: 'bold' },
-    item: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#eee',height:150 },
+    item: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#eee', height: Platform.select({ios:90,android:150}) },
     name: { fontSize: 16 },
     empty: { textAlign: 'center', marginTop: 40, color: '#888' },
 });
