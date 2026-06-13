@@ -2,9 +2,9 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { ActivityIndicator, FlatList, TextInput, StyleSheet, Text, TouchableOpacity, View, RefreshControl } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchData } from '../store/slices/list';
-import { navigate } from '../utils/NavigationService';
-import { AppDispatch, RootState } from '../store/store';
+import { fetchData } from '../../../store/slices/list';
+import { navigate } from '../../../utils/NavigationService';
+import { AppDispatch, RootState } from '../../../store/store';
 
 export default function UserList() {
     const dispatch = useDispatch<AppDispatch>();

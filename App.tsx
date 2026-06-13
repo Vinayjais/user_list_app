@@ -10,10 +10,10 @@ import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-cont
 import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef } from './utils/NavigationService';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ViewDetails from './app/ViewDetails';
-import UserList from './app/UserList';
+import ViewDetails from './app/screens/userList/ViewDetails';
+import UserList from './app/screens/userList/UserList';
 import Home from './app/Home';
-import DynamicTodo from './app/DynamicTodo';
+import DynamicTodo from './app/screens/todo/DynamicTodo';
 import { Provider } from 'react-redux';
 import {store} from './store/store';
 const Stack = createNativeStackNavigator();
