@@ -11,6 +11,7 @@ import Animated, {
     FadeOut,
     SlideInRight,
     SlideOutLeft,
+    LinearTransition
 } from 'react-native-reanimated';
 
 export default function DynamicTodo() {
@@ -94,8 +95,10 @@ export default function DynamicTodo() {
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
                     <Animated.View
+                        key={item.id}
                         entering={SlideInRight.duration(250)}
                         exiting={SlideOutLeft.duration(250)}
+                        layout={LinearTransition.duration(250)}
                     >
                         <Item
                             item={item}
