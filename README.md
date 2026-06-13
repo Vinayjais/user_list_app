@@ -1,97 +1,93 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# User List App
 
-# Getting Started
+A React Native application for managing and displaying a list of users. Built with React Native, Redux Toolkit, and React Navigation.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Prerequisites
 
-## Step 1: Start Metro
+Before you begin, ensure you have the following installed:
+- **Node.js** (>= 20.19.4)
+- **Watchman** (macOS only)   
+- **Ruby** (for iOS Cocoapods)
+- **Java Development Kit (JDK)** (for Android)
+- **Android Studio** (for Android development)
+- **Xcode** (for iOS development, macOS only)
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+Detailed environment setup instructions can be found in the [official React Native documentation](https://reactnative.dev/docs/environment-setup).
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## Installation
 
-```sh
-# Using npm
+1. Navigate to the project directory (if not already there):
+   ```bash
+   cd user_list_app
+   ```
+
+2. Install the Node dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+## Setup for iOS (macOS only)
+
+To run the app on iOS, you need to install the necessary native dependencies using CocoaPods.
+
+1. Navigate to the `ios` directory:
+   ```bash
+   cd ios
+   ```
+
+2. Install the required Ruby gems (for CocoaPods):
+   ```bash
+   bundle install
+   ```
+
+3. Install CocoaPods dependencies:
+   ```bash
+   bundle exec pod install
+   ```
+
+4. Return to the root project directory:
+   ```bash
+   cd ..
+   ```
+
+## Setup for Android
+
+Ensure you have an Android Emulator running, or a physical device connected via USB with "USB Debugging" enabled. No additional dependency installation is required specifically for Android, as Gradle will handle it automatically during the build process.
+
+## Running the App
+
+### 1. Start the Metro Bundler
+
+First, you need to start Metro, the JavaScript bundler that ships with React Native.
+
+```bash
 npm start
-
-# OR using Yarn
+# or
 yarn start
 ```
 
-## Step 2: Build and run your app
+### 2. Run the Application
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+Keep the Metro Bundler terminal running. Open a new terminal window/pane, ensure you are in the project root, and use one of the following commands:
 
-### Android
-
-```sh
-# Using npm
+#### To run on Android:
+```bash
 npm run android
-
-# OR using Yarn
+# or
 yarn android
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+#### To run on iOS:
+```bash
 npm run ios
-
-# OR using Yarn
+# or
 yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## Troubleshooting
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- **Metro Cache:** If you encounter unexpected behavior, try clearing the Metro cache: `npm start -- --reset-cache`.
+- **iOS Build Errors:** If iOS builds fail, try navigating to the `ios` directory and running `pod install` again, or open the `ios/user_list_app.xcworkspace` in Xcode to clean the build folder (`Cmd + Shift + K`).
+- **Android Build Errors:** Try navigating to the `android` directory and running `./gradlew clean`, then build again.

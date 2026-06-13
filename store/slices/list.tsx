@@ -22,7 +22,7 @@ const list = createSlice({
         laoding: false,
         isRefreshing: false,
         page: 1,
-        limit: 10,
+        limit: 6,
         hasMore: true,
         haseMoreLoading: false,
     },

@@ -19,6 +19,8 @@ export default function UserList() {
 
     useEffect(() => {
         dispatch(fetchData({ page: 1, limit }));
+        console.log('useEffect called');
+
     }, []);
 
     useEffect(() => {
@@ -26,11 +28,19 @@ export default function UserList() {
     }, [laoding, haseMoreLoading, isRefreshing]);
 
     const loadMoreData = useCallback(() => {
-        if (!isFetching.current && hasMore && !search) {
-            isFetching.current = true;
-            dispatch(fetchData({ page, limit }));
+        if (isFetching.current || !hasMore ) {
+            return;
         }
-    }, [page, limit, hasMore, search]);
+        console.log('loadMoreData called');
+        isFetching.current = true;
+
+        dispatch(fetchData({ page, limit }))
+            .finally(() => {
+                isFetching.current = false;
+            });
+    }, [dispatch, page, limit, hasMore]);
+
+
 
     return (
         <View style={styles.container}>
