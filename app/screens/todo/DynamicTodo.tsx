@@ -1,14 +1,22 @@
 import React, { useState, useMemo } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
 import * as Progress from 'react-native-progress';
 import { useSelector, useDispatch } from 'react-redux';
 import { addTodo, editTodo, toggleTodo, deleteTodo, undoDelete } from '../../../store/slices/todo';
+import { RootState } from '../../../store/store';
+import { Item } from './Item';
+import Feather from 'react-native-vector-icons/Feather';
+
+import Animated, {
+    FadeOut,
+    SlideInRight,
+    SlideOutLeft,
+} from 'react-native-reanimated';
 
 export default function DynamicTodo() {
     const dispatch = useDispatch();
-    const todos = useSelector(state => state.todo.data);
-    const deleted = useSelector(state => state.todo.deleted);
+    const todos = useSelector((state: RootState) => state.todo.data);
+    const deleted = useSelector((state: RootState) => state.todo.deleted);
     const [input, setInput] = useState('');
     const [editId, setEditId] = useState(null);
 
@@ -27,7 +35,7 @@ export default function DynamicTodo() {
         setInput('');
     };
 
-    const startEdit = (item) => {
+    const startEdit = (item: any) => {
         setEditId(item.id);
         setInput(item.text);
     };
@@ -85,20 +93,19 @@ export default function DynamicTodo() {
                 data={todos}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
-                    <View style={[styles.item, editId === item.id && styles.itemEditing]}>
-                        <TouchableOpacity style={styles.itemLeft} onPress={() => dispatch(toggleTodo(item.id))}>
-                            <View style={[styles.checkbox, item.done && styles.checkboxDone]} />
-                            <Text style={[styles.itemText, item.done && styles.itemTextDone]}>{item.text}</Text>
-                        </TouchableOpacity>
-                        <View style={styles.actions}>
-                            <TouchableOpacity onPress={() => startEdit(item)}>
-                                <Feather name="edit-2" size={18} color="#007AFF" style={styles.actionIcon} />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => dispatch(deleteTodo(item.id))}>
-                                <Feather name="trash-2" size={18} color="#FF3B30" style={styles.actionIcon} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                    <Animated.View
+                        entering={SlideInRight.duration(250)}
+                        exiting={SlideOutLeft.duration(250)}
+                    >
+                        <Item
+                            item={item}
+                            editId={editId}
+                            startEdit={startEdit}
+                            onToggle={(id) => dispatch(toggleTodo(id))}
+                            onDelete={(id) => dispatch(deleteTodo(id))}
+                            styles={styles}
+                        />
+                    </Animated.View>
                 )}
                 ListEmptyComponent={<Text style={styles.empty}>No tasks yet. Add one above!</Text>}
             />

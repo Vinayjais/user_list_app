@@ -10,7 +10,7 @@ import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-cont
 import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef } from './utils/NavigationService';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ViewDetails from './app/screens/userList/ViewDetails';
+import UserDetails from './app/screens/userList/UserDetails';
 import UserList from './app/screens/userList/UserList';
 import Home from './app/Home';
 import DynamicTodo from './app/screens/todo/DynamicTodo';
@@ -26,12 +26,12 @@ function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SafeAreaProvider>
-          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />+
           <NavigationContainer ref={navigationRef}>
             <Stack.Navigator initialRouteName='Home'>
               <Stack.Screen name="Home" component={Home} options={{ title: 'Home' }} />
               <Stack.Screen name="UserList" component={UserList} options={{ title: 'User List' }} />
-              <Stack.Screen name="ViewDetails" component={ViewDetails} options={{ title: 'User Details' }} />
+              <Stack.Screen name="ViewDetails" component={UserDetails} options={{ title: 'User Details' }} />
               <Stack.Screen name="DynamicTodo" component={DynamicTodo} options={{ title: 'Dynamic Todo' }} />
             </Stack.Navigator>
           </NavigationContainer>
