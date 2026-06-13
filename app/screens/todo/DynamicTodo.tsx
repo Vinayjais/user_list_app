@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTodo, editTodo, toggleTodo, deleteTodo, undoDelete } from '../../../store/slices/todo';
+import { addTodo, editTodo, toggleTodo, deleteTodo, undoDelete, removeDeleted } from '../../../store/slices/todo';
 import { RootState } from '../../../store/store';
 import { Item } from './Item';
 import Feather from 'react-native-vector-icons/Feather';
@@ -46,6 +46,13 @@ export default function DynamicTodo() {
         setInput('');
     };
 
+    const handleDelete = (id: string) => {
+        dispatch(deleteTodo(id));
+        setTimeout(() => {
+            dispatch(removeDeleted(id));
+        }, 10000);
+    };
+
     return (
         <View style={styles.container}>
             {total > 0 && (
@@ -66,12 +73,12 @@ export default function DynamicTodo() {
                     />
                 </View>
             )}
-            {deleted.length > 0 && (
-                <TouchableOpacity style={styles.undoBtn} onPress={() => dispatch(undoDelete())}>
+            {deleted.map((d: any) => (
+                <TouchableOpacity key={d.item.id} style={styles.undoBtn} onPress={() => dispatch(undoDelete(d.item.id))}>
                     <Feather name="rotate-ccw" size={14} color="#fff" />
-                    <Text style={styles.undoBtnText}>{`Undo delete "${deleted[0].item.text}"`}</Text>
+                    <Text style={styles.undoBtnText}>{`Undo delete "${d.item.text}"`}</Text>
                 </TouchableOpacity>
-            )}
+            ))}
             <View style={styles.inputRow}>
                 <TextInput
                     style={styles.input}
@@ -106,7 +113,7 @@ export default function DynamicTodo() {
                             editId={editId}
                             startEdit={startEdit}
                             onToggle={(id) => dispatch(toggleTodo(id))}
-                            onDelete={(id) => dispatch(deleteTodo(id))}
+                            onDelete={handleDelete}
                             styles={styles}
                         />
                     </Animated.View>

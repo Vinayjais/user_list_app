@@ -13,6 +13,7 @@ Throughout development, several key prompts were used to guide the AI assistance
 * *"Create a React Native component for displaying a user row with label and value styling, using TypeScript."*
 * *"How can I set up Redux Toolkit with `redux-persist` and `@react-native-async-storage/async-storage` for a React Native app?"*
 * *"What is the best practice for handling pagination with a flat list in React Native while using Redux for state?"*
+* *"In this file I have an undo option for deleted todos. I want to limit the undo option to exactly 10 seconds. If I delete multiple todos consecutively, manage it accordingly so that every individual todo has its own 10-second undo window, without changing other functionality."*
 
 ## 3. Files/Components Primarily Generated Using AI
 

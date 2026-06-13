@@ -43,12 +43,18 @@ const todo = createSlice({
                 state.data.splice(index, 1);
             }
         },
-        undoDelete: (state) => {
-            const deleted = state.deleted.shift();
-            if (deleted) state.data.splice(deleted.index, 0, deleted.item);
+        undoDelete: (state, action) => {
+            const index = state.deleted.findIndex(d => d.item.id === action.payload);
+            if (index !== -1) {
+                const [deleted] = state.deleted.splice(index, 1);
+                state.data.splice(deleted.index, 0, deleted.item);
+            }
+        },
+        removeDeleted: (state, action) => {
+            state.deleted = state.deleted.filter(d => d.item.id !== action.payload);
         },
     }
 });
 
-export const { addTodo, editTodo, toggleTodo, deleteTodo, undoDelete } = todo.actions;
+export const { addTodo, editTodo, toggleTodo, deleteTodo, undoDelete, removeDeleted } = todo.actions;
 export default todo.reducer;

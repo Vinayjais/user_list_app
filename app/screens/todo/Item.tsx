@@ -41,7 +41,8 @@ export const Item = ({ item, editId, startEdit, onToggle, onDelete, styles, }: I
                         item.done && styles.itemTextDone,
                     ]}
                 >
-                    {item.text} </Text> </TouchableOpacity>
+                    {item.text} </Text>
+            </TouchableOpacity>
 
             <View style={styles.actions}>
                 <TouchableOpacity onPress={() => startEdit(item)}>
