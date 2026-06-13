@@ -1,14 +1,17 @@
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { ActivityIndicator, FlatList, TextInput, StyleSheet, Text, TouchableOpacity, View, RefreshControl } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchData } from '../store/slices/list';
+import { navigate } from '../utils/NavigationService';
+import { AppDispatch, RootState } from '../store/store';
 
-export default function UserList({ navigation }) {
-    const dispatch = useDispatch();
-    const { data, laoding = false, page, limit, hasMore, haseMoreLoading } = useSelector((state) => state.list);
+export default function UserList() {
+    const dispatch = useDispatch<AppDispatch>();
+    const { data, laoding = false, page, limit, hasMore, haseMoreLoading } = useSelector((state: RootState) => state.list);
     const [search, setSearch] = useState('');
+    const isFetching = useRef(false);
+
     const filteredData = useMemo(() =>
         data.filter(item => item.name.toLowerCase().includes(search.toLowerCase())),
         [data, search]
@@ -18,11 +21,16 @@ export default function UserList({ navigation }) {
         dispatch(fetchData({ page: 1, limit }));
     }, []);
 
-    const loadMoreData = () => {
-        if (!laoding && !haseMoreLoading && hasMore && !search) {
+    useEffect(() => {
+        isFetching.current = laoding || haseMoreLoading;
+    }, [laoding, haseMoreLoading]);
+
+    const loadMoreData = useCallback(() => {
+        if (!isFetching.current && hasMore && !search) {
+            isFetching.current = true;
             dispatch(fetchData({ page, limit }));
         }
-    };
+    }, [page, limit, hasMore, search]);
 
     return (
         <View style={styles.container}>
@@ -41,12 +49,12 @@ export default function UserList({ navigation }) {
                 refreshControl={ 
                <RefreshControl
                         refreshing={Boolean(laoding)}
-                        onRefresh={() => dispatch(fetchData({ page: 1, limit, refreshing:true }))}
+                onRefresh={() => dispatch(fetchData({ page: 1, limit }))}
                     />
                                     }
                 initialNumToRender={5}
                 renderItem={({ item }) => (
-                    <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('ViewDetails', item)}>
+                    <TouchableOpacity style={styles.item} onPress={() => navigate('ViewDetails', item)}>
                         <Text style={styles.name}>{item.name}</Text>
                     </TouchableOpacity>
                 )}

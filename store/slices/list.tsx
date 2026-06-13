@@ -3,15 +3,15 @@ import { Alert } from "react-native";
 
 export const fetchData = createAsyncThunk(
     'list/fetchData',
-    async ({ page, limit }, { rejectWithValue }) => {
+    async ({ page, limit } : any, { rejectWithValue }) => {
         try {
-            console.log("=dsada=====",page,limit)
             const response = await fetch(`https://jsonplaceholder.typicode.com/users?_page=${page}&_limit=${limit}`);
             const data = await response.json();
             return data;
         } catch (error) {
-            Alert.alert('Error', error.message);
-            return rejectWithValue(error.message);
+            const message = error instanceof Error ? error.message : 'Something went wrong';
+            Alert.alert('Error', message);
+            return rejectWithValue(message);
         }
     }
 )
@@ -21,7 +21,7 @@ const list = createSlice({
         data: [],
         laoding: false,
         page: 1,
-        limit: 6,
+        limit: 5,
         hasMore: true,
         haseMoreLoading: false,
     },
@@ -52,5 +52,4 @@ const list = createSlice({
     }
 })
 
-export const { addData } = list.actions;
 export default list.reducer;
